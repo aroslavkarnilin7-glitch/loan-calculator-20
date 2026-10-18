@@ -32,7 +32,7 @@ def test_convert_success(app):
     app.target_var.set("USD")
     with patch("db.get_saved_rate", return_value=90.0):
         app.convert()
-        assert "10000.00 RUB" in app.result_label.cget("text")
+        assert "10 000.00 RUB" in app.result_label.cget("text")
 
 
 def test_convert_none_rate(app):
