@@ -128,9 +128,7 @@ class CurrencyConverterApp(tk.Tk):
         try:
             loan = float(self.loan_var.get().replace(" ", "").replace(",", "."))
             months = int(float(self.loan_time_var.get().replace(",", ".")))
-            annual_interest = float(
-                self.annual_interest_var.get().replace(",", ".")
-            )
+            annual_interest = float(self.annual_interest_var.get().replace(",", "."))
         except ValueError:
             self.log("Ошибка: введите корректные числовые значения.")
             return
@@ -146,9 +144,7 @@ class CurrencyConverterApp(tk.Tk):
 
         monthly_rate = annual_interest / 12 / 100
         monthly_payment = (
-            loan
-            * monthly_rate
-            / (1 - math.pow(1 + monthly_rate, -months))
+            loan * monthly_rate / (1 - math.pow(1 + monthly_rate, -months))
         )
         total_sum = monthly_payment * months
         interest = total_sum - loan

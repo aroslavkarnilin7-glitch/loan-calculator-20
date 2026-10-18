@@ -7,16 +7,14 @@ DB_NAME = "currency.db"
 def init_db() -> None:
     """Инициализация БД и создание таблицы курсов."""
     with sqlite3.connect(DB_NAME) as conn:
-        conn.execute(
-            """
+        conn.execute("""
             CREATE TABLE IF NOT EXISTS rates (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 target_currency TEXT NOT NULL UNIQUE,
                 rate REAL NOT NULL,
                 updated_at TEXT NOT NULL
             )
-            """
-        )
+            """)
 
 
 def save_rate(id: int, target_currency: str, rate: float) -> None:
