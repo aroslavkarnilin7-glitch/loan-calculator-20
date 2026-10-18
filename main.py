@@ -174,28 +174,31 @@ class CurrencyConverterApp(tk.Tk):
             self.log("Выберите валюту для конвертации.")
             return
 
-        if target_currency == "RUB":
-            converted = self.monthly_payment
-        else:
-            rate = db.get_saved_rate(target_currency)
+        try:
+            if target_currency == "RUB":
+                converted = self.monthly_payment
+            else:
+                rate = db.get_saved_rate(target_currency)
 
-            if rate is None or rate <= 0:
-                self.log(
-                    f"Курс {target_currency} не найден. "
-                    "Нажмите «Обновить курсы валют»."
-                )
-                return
+                if rate is None or rate <= 0:
+                    self.log(
+                        f"Курс {target_currency} не найден. "
+                        "Нажмите «Обновить курсы валют»."
+                    )
+                    return
 
-            converted = self.monthly_payment / rate
+                converted = self.monthly_payment / rate
 
-        self.result_label.config(
-            text=(
-                f"{self.monthly_payment:,.2f} RUB = "
-                f"{converted:,.2f} {target_currency}"
-            ).replace(",", " ")
-        )
+            self.result_label.config(
+                text=(
+                    f"{self.monthly_payment:,.2f} RUB = "
+                    f"{converted:,.2f} {target_currency}"
+                ).replace(",", " ")
+            )
 
-        self.log(f"Конвертация выполнена: RUB → {target_currency}.")
+            self.log(f"Конвертация выполнена: RUB → {target_currency}.")
+        except Exception as error:
+            self.log(f"Ошибка при конвертации: {error}")
 
     def update_db(self) -> None:
         try:
